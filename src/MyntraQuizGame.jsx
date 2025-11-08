@@ -445,6 +445,13 @@ function ImageCard({
         <div className="image-side">
           <div className="mq-image-container">
             <div className="mq-image-box">
+              {!imageLoaded && !imageError && (
+                <div className="image-skeleton-loading">
+                  <div className="skeleton-spinner"></div>
+                  <div className="skeleton-text">Loading image...</div>
+                </div>
+              )}
+              
               {imageObj?.src ? (
                 <img
                   src={imageObj.src}
@@ -455,10 +462,15 @@ function ImageCard({
                   onLoad={() => setImageLoaded(true)}
                   onError={() => {
                     setImageError(true);
+                    setImageLoaded(true);
                   }}
-                  style={{ objectFit: "cover" }}
+                  style={{ 
+                    objectFit: "cover",
+                    display: imageLoaded && !imageError ? 'block' : 'none'
+                  }}
                 />
               ) : null}
+              
               {imageError && (
                 <div className="mq-image-fallback">
                   <div className="image-placeholder">🏢</div>
