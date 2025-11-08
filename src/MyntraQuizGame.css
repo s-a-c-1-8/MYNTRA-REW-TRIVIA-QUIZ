@@ -263,38 +263,38 @@ body {
   flex-shrink: 0;
 }
 
-/* Game Header */
+/* Game Header - Made Smaller */
 .mq-game-header {
   width: 100%;
   background: var(--card-bg);
   border-radius: var(--radius);
-  padding: 20px 30px;
-  margin-bottom: 24px;
+  padding: 15px 25px;
+  margin-bottom: 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   box-shadow: var(--shadow);
   border: 1px solid var(--card-border);
-  gap: 20px;
+  gap: 15px;
   backdrop-filter: blur(10px);
 }
 
 .player-section {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 12px;
 }
 
 .player-avatar {
-  width: 50px;
-  height: 50px;
+  width: 45px;
+  height: 45px;
   border-radius: 50%;
   background: var(--gradient-primary);
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 800;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   color: white;
   box-shadow: var(--glow);
 }
@@ -306,13 +306,13 @@ body {
 
 .player-name {
   font-weight: 700;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   color: var(--text);
   letter-spacing: 0.5px;
 }
 
 .player-status {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   color: var(--text-secondary);
   font-weight: 600;
   text-transform: uppercase;
@@ -325,15 +325,15 @@ body {
 
 .score-display {
   background: var(--gradient-primary);
-  padding: 15px 25px;
+  padding: 12px 20px;
   border-radius: var(--radius);
   box-shadow: var(--glow);
-  min-width: 120px;
+  min-width: 100px;
 }
 
 .score-label {
   display: block;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 700;
   opacity: 0.9;
   letter-spacing: 0.5px;
@@ -341,25 +341,25 @@ body {
 
 .score-value {
   display: block;
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   font-weight: 800;
-  margin-top: 4px;
+  margin-top: 2px;
 }
 
 .progress-section {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   flex: 1;
-  max-width: 300px;
+  max-width: 250px;
 }
 
 .progress-bar {
   width: 100%;
-  height: 12px;
+  height: 10px;
   background: var(--border);
-  border-radius: 6px;
+  border-radius: 5px;
   overflow: hidden;
   box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
 }
@@ -367,62 +367,62 @@ body {
 .progress-fill {
   height: 100%;
   background: var(--gradient-primary);
-  border-radius: 6px;
+  border-radius: 5px;
   transition: width 0.3s ease;
   box-shadow: 0 0 10px rgba(255, 63, 108, 0.5);
 }
 
 .progress-text {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: var(--text-muted);
   font-weight: 600;
   letter-spacing: 0.5px;
 }
 
-/* Card Styles */
+/* Card Styles - Made Smaller */
 .mq-card {
   background: var(--card-bg);
   border-radius: var(--radius);
-  padding: 30px;
+  padding: 25px;
   box-shadow: var(--shadow);
   border: 1px solid var(--card-border);
-  margin-bottom: 24px;
+  margin-bottom: 20px;
   width: 100%;
   backdrop-filter: blur(10px);
 }
 
 .mq-question-count {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-weight: 700;
   color: var(--primary);
   text-transform: uppercase;
   letter-spacing: 1px;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
   text-align: center;
 }
 
 .mq-question {
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   font-weight: 600;
-  line-height: 1.5;
+  line-height: 1.4;
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 25px;
   color: var(--text);
-  padding: 0 20px;
+  padding: 0 15px;
 }
 
-/* Options Grid */
+/* Options Grid - Made Smaller - REMOVED HOVER EFFECTS */
 .mq-options {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 12px;
+  gap: 10px;
 }
 
 .mq-option {
   display: flex;
   align-items: center;
-  gap: 16px;
-  padding: 18px 20px;
+  gap: 14px;
+  padding: 15px 18px;
   border-radius: var(--radius);
   border: 2px solid var(--border);
   background: rgba(255, 255, 255, 0.05);
@@ -434,14 +434,22 @@ body {
   overflow: hidden;
 }
 
-.mq-option:hover:not(:disabled) {
+/* REMOVED HOVER EFFECTS - Only keep focus/selected states */
+.mq-option:focus {
+  outline: none;
   border-color: var(--primary);
   background: rgba(255, 63, 108, 0.1);
-  transform: translateX(8px);
 }
 
 .mq-option[aria-disabled="true"] {
   cursor: not-allowed;
+}
+
+/* Selected state for keyboard navigation */
+.mq-option.selected {
+  border-color: var(--primary);
+  background: rgba(255, 63, 108, 0.15);
+  transform: translateX(4px);
 }
 
 .mq-option.correct {
@@ -457,20 +465,21 @@ body {
 }
 
 .option-letter {
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   border-radius: 8px;
   background: var(--border);
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 700;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   flex-shrink: 0;
   transition: all 0.3s ease;
 }
 
-.mq-option:hover .option-letter {
+/* REMOVED HOVER EFFECTS for option letters */
+.mq-option.selected .option-letter {
   background: var(--primary);
   color: white;
 }
@@ -488,6 +497,7 @@ body {
 .option-text {
   flex: 1;
   font-weight: 500;
+  font-size: 0.95rem;
 }
 
 @keyframes glow-correct {
@@ -514,7 +524,7 @@ body {
   }
 }
 
-/* Image Card Styles */
+/* Image Card Styles - Made Smaller */
 .image-card {
   text-align: center;
   width: 100%;
@@ -522,7 +532,7 @@ body {
 
 .image-card-content {
   display: flex;
-  gap: 40px;
+  gap: 30px;
   align-items: flex-start;
   justify-content: space-between;
 }
@@ -550,9 +560,10 @@ body {
   align-items: center;
 }
 
+/* Image Box - Made Much Smaller */
 .mq-image-box {
-  width: 300px;
-  height: 400px;
+  width: 280px;
+  height: 350px;
   border-radius: var(--radius);
   overflow: hidden;
   background: rgba(0, 0, 0, 0.3);
@@ -562,7 +573,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 .mq-image-box img {
@@ -573,14 +584,14 @@ body {
   background: rgba(0, 0, 0, 0.1);
 }
 
-/* Zoom classes */
+/* Zoom classes - Adjusted for smaller image */
 .image-view.zoom-60 {
-  transform: scale(2.5);
+  transform: scale(2);
   transform-origin: center center;
 }
 
 .image-view.zoom-40 {
-  transform: scale(1.67);
+  transform: scale(1.5);
   transform-origin: center center;
 }
 
@@ -602,10 +613,10 @@ body {
   border: 3px solid var(--border);
   border-top: 3px solid var(--primary);
   border-radius: 50%;
-  width: 40px;
-  height: 40px;
+  width: 35px;
+  height: 35px;
   animation: spin 1s linear infinite;
-  margin-bottom: 15px;
+  margin-bottom: 12px;
 }
 
 @keyframes spin {
@@ -625,48 +636,48 @@ body {
   justify-content: center;
   background: var(--gradient-secondary);
   color: var(--text-muted);
-  font-size: 1.2rem;
+  font-size: 1.1rem;
 }
 
 .image-placeholder {
-  font-size: 4rem;
-  margin-bottom: 20px;
+  font-size: 3rem;
+  margin-bottom: 15px;
   color: var(--primary);
 }
 
 .image-label-preview {
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   font-weight: 600;
   color: var(--primary);
 }
 
 .image-hint {
-  margin-top: 12px;
-  font-size: 1rem;
+  margin-top: 10px;
+  font-size: 0.9rem;
   color: var(--text-muted);
   font-weight: 600;
   background: rgba(255, 63, 108, 0.1);
-  padding: 10px 20px;
-  border-radius: 20px;
+  padding: 8px 16px;
+  border-radius: 18px;
   display: inline-block;
   border: 1px solid var(--primary);
 }
 
-/* Options styling for side layout */
+/* Options styling for side layout - Made Smaller - REMOVED HOVER EFFECTS */
 .options-side .mq-options {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
   height: 100%;
   justify-content: center;
-  min-height: 400px;
+  min-height: 350px;
 }
 
 .options-side .mq-option {
   display: flex;
   align-items: center;
-  gap: 16px;
-  padding: 20px 24px;
+  gap: 14px;
+  padding: 16px 20px;
   border-radius: var(--radius);
   border: 2px solid var(--border);
   background: rgba(255, 255, 255, 0.05);
@@ -675,29 +686,37 @@ body {
   transition: all 0.3s ease;
   font-weight: 500;
   width: 100%;
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
 
-.options-side .mq-option:hover:not(:disabled) {
+/* REMOVED HOVER EFFECTS for side options */
+.options-side .mq-option:focus {
+  outline: none;
   border-color: var(--primary);
   background: rgba(255, 63, 108, 0.15);
-  transform: translateX(8px);
+}
+
+.options-side .mq-option.selected {
+  border-color: var(--primary);
+  background: rgba(255, 63, 108, 0.15);
+  transform: translateX(4px);
 }
 
 .options-side .option-letter {
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   border-radius: 8px;
   background: var(--border);
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 0.9rem;
   flex-shrink: 0;
 }
 
-.options-side .mq-option:hover .option-letter {
+/* REMOVED HOVER EFFECTS for side option letters */
+.options-side .mq-option.selected .option-letter {
   background: var(--primary);
   color: white;
 }
@@ -712,13 +731,13 @@ body {
   color: white;
 }
 
-/* Feedback Styles */
+/* Feedback Styles - Made Smaller */
 .mq-feedback {
-  padding: 20px;
+  padding: 16px;
   border-radius: var(--radius);
   text-align: center;
   font-weight: 600;
-  margin: 20px 0;
+  margin: 16px 0;
   animation: slideIn 0.5s ease;
   border: 2px solid;
   backdrop-filter: blur(10px);
@@ -737,7 +756,7 @@ body {
 }
 
 .feedback-content {
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 700;
 }
 
@@ -752,44 +771,44 @@ body {
   }
 }
 
-/* Final Score Styles */
+/* Final Score Styles - Made Smaller */
 .final-score-card {
   text-align: center;
-  padding: 40px;
+  padding: 30px;
   background: var(--gradient-secondary);
   border-radius: var(--radius);
   border: 2px solid var(--card-border);
-  margin-bottom: 30px;
+  margin-bottom: 25px;
   box-shadow: var(--shadow);
   backdrop-filter: blur(10px);
 }
 
 .score-avatar {
-  width: 80px;
-  height: 80px;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
   background: var(--gradient-primary);
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 800;
-  font-size: 2rem;
+  font-size: 1.8rem;
   color: white;
-  margin: 0 auto 20px;
+  margin: 0 auto 15px;
   box-shadow: var(--glow);
 }
 
 .final-player {
-  font-size: 1.3rem;
-  margin-bottom: 16px;
+  font-size: 1.2rem;
+  margin-bottom: 12px;
   color: var(--text-muted);
   font-weight: 600;
 }
 
 .final-points {
-  font-size: 3.5rem;
+  font-size: 3rem;
   font-weight: 800;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   background: var(--gradient-primary);
   -webkit-background-clip: text;
@@ -799,10 +818,10 @@ body {
 
 .mq-performance {
   display: inline-block;
-  padding: 12px 24px;
+  padding: 10px 20px;
   border-radius: 50px;
   font-weight: 700;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   box-shadow: var(--shadow);
   background: var(--gradient-primary);
   color: white;
@@ -811,29 +830,29 @@ body {
 .score-breakdown {
   background: rgba(255, 255, 255, 0.08);
   border-radius: var(--radius);
-  padding: 24px;
-  margin-bottom: 30px;
+  padding: 20px;
+  margin-bottom: 25px;
   border: 1px solid var(--card-border);
 }
 
 .score-breakdown h4 {
-  margin-bottom: 16px;
+  margin-bottom: 12px;
   color: var(--text-muted);
   text-align: center;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 600;
 }
 
 .breakdown-items {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
 .breakdown-item {
   display: flex;
   justify-content: space-between;
-  padding: 12px 0;
+  padding: 10px 0;
   border-bottom: 1px solid var(--border);
   font-weight: 500;
 }
@@ -852,10 +871,11 @@ body {
 }
 
 .home-btn {
-  width: 200px;
-  font-size: 1.1rem;
+  width: 180px;
+  font-size: 1rem;
   font-weight: 800;
 }
+
 /* Logo Styles */
 .game-logos {
   position: fixed;
@@ -865,7 +885,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
+  padding: 15px 20px;
   z-index: 1000;
   pointer-events: none;
   background: rgba(40, 44, 63, 0.95);
@@ -877,7 +897,7 @@ body {
 .logo-right,
 .logo-center {
   pointer-events: auto;
-  margin: 0 20px;
+  margin: 0 15px;
 }
 
 .logo-center {
@@ -888,7 +908,7 @@ body {
 }
 
 .center-title {
-  font-size: 2rem;
+  font-size: 1.8rem;
   font-weight: 800;
   background: linear-gradient(135deg, var(--primary), var(--primary-dark));
   -webkit-background-clip: text;
@@ -901,9 +921,9 @@ body {
 }
 
 .logo-image {
-  height: 60px;
+  height: 50px;
   width: auto;
-  max-width: 200px;
+  max-width: 180px;
   object-fit: contain;
   filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
 }
@@ -912,21 +932,15 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 50px;
-  padding: 0 20px;
+  height: 45px;
+  padding: 0 18px;
   background: var(--gradient-primary);
   color: white;
   border-radius: 8px;
   font-weight: bold;
-  font-size: 16px;
-  min-width: 120px;
+  font-size: 15px;
+  min-width: 110px;
   box-shadow: var(--shadow);
-}
-
-/* Adjust existing containers to account for logos */
-.mq-container {
-  position: relative;
-  padding-top: 120px; /* Increased to account for taller header */
 }
 
 /* Adjust existing containers to account for logos */
@@ -936,13 +950,13 @@ body {
 }
 
 .mq-game-header {
-  margin-top: 20px;
+  margin-top: 15px;
 }
 
 /* ---------- Toast (top-center) ---------- */
 .mq-toast-wrap {
   position: fixed;
-  top: 108px;
+  top: 100px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 9999;
@@ -953,14 +967,14 @@ body {
 }
 
 .mq-toast {
-  min-width: 220px;
-  max-width: 680px;
-  padding: 12px 18px;
-  border-radius: 12px;
+  min-width: 200px;
+  max-width: 600px;
+  padding: 10px 16px;
+  border-radius: 10px;
   color: #fff;
   font-weight: 700;
   letter-spacing: 0.2px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.45);
   transform-origin: center top;
   opacity: 0;
   transform: translateY(-8px) scale(0.98);
@@ -968,7 +982,7 @@ body {
   pointer-events: auto;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 /* visible state */
@@ -992,104 +1006,117 @@ body {
 }
 
 .mq-toast .icon {
-  font-size: 1.15rem;
-}
-
-/* selected option while toast shows (subtle) */
-.mq-option.selected {
-  transform: translateX(4px);
-  box-shadow: inset 0 3px 0 rgba(255,255,255,0.02);
-  transition: transform 180ms ease, box-shadow 180ms ease;
+  font-size: 1.1rem;
 }
 
 /* ============================================= */
-/* TABLET (iPad) RESPONSIVE STYLES */
+/* TABLET (iPad) RESPONSIVE STYLES - ADJUSTED FOR SMALLER COMPONENTS */
 /* ============================================= */
 
 /* iPad Pro (1024px and up) */
 @media (min-width: 1024px) and (max-width: 1366px) {
   .mq-container {
-    padding: 20px;
-    padding-top: 100px;
+    padding: 15px;
+    padding-top: 90px;
   }
   
   .mq-game-content {
-    max-width: 900px;
+    max-width: 850px;
   }
   
   .mq-game-header {
-    padding: 20px 25px;
-    gap: 25px;
+    padding: 12px 20px;
+    gap: 20px;
   }
   
   .player-name {
-    font-size: 1.3rem;
+    font-size: 1.1rem;
   }
   
-  .score-display {
-    padding: 12px 20px;
-    min-width: 110px;
-  }
-  
-  .score-value {
-    font-size: 1.6rem;
-  }
-  
-  .progress-section {
-    max-width: 250px;
-  }
-  
-  /* Image card adjustments for iPad */
-  .image-card-content {
-    gap: 30px;
-  }
-  
-  .mq-image-box {
-    width: 400px;
-    height: 500px;
-  }
-  
-  .options-side .mq-option {
-    padding: 18px 20px;
+  .player-avatar {
+    width: 40px;
+    height: 40px;
     font-size: 1rem;
   }
   
-  .mq-question {
+  .score-display {
+    padding: 10px 16px;
+    min-width: 90px;
+  }
+  
+  .score-value {
     font-size: 1.3rem;
   }
   
+  .progress-section {
+    max-width: 220px;
+  }
+  
+  /* Image card adjustments for iPad - Made Smaller */
+  .image-card-content {
+    gap: 25px;
+  }
+  
+  .mq-image-box {
+    width: 250px;
+    height: 320px;
+  }
+  
+  .options-side .mq-option {
+    padding: 14px 18px;
+    font-size: 0.95rem;
+  }
+  
+  .mq-question {
+    font-size: 1.1rem;
+  }
+  
   .logo-image {
-    height: 50px;
+    height: 45px;
     max-width: 150px;
   }
   
   .center-title {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
+  }
+  
+  .mq-card {
+    padding: 20px;
+  }
+  
+  .mq-option {
+    padding: 14px 16px;
+  }
+  
+  .option-letter {
+    width: 30px;
+    height: 30px;
+    font-size: 0.8rem;
   }
 }
 
 /* iPad (768px to 1023px) */
 @media (min-width: 768px) and (max-width: 1023px) {
   .mq-container {
-    padding: 16px;
-    padding-top: 90px;
+    padding: 12px;
+    padding-top: 80px;
   }
   
   .mq-game-content {
-    max-width: 95%;
+    max-width: 90%;
   }
   
   .mq-game-header {
     flex-direction: row;
     flex-wrap: wrap;
-    padding: 18px 20px;
-    gap: 15px;
+    padding: 12px 16px;
+    gap: 12px;
   }
   
   .player-section {
     order: 1;
     flex: 1;
-    min-width: 200px;
+    min-width: 180px;
   }
   
   .score-section {
@@ -1101,32 +1128,32 @@ body {
     order: 3;
     flex: 1 1 100%;
     max-width: 100%;
-    margin-top: 10px;
+    margin-top: 8px;
   }
   
   .player-name {
-    font-size: 1.2rem;
+    font-size: 1rem;
   }
   
   .player-avatar {
-    width: 45px;
-    height: 45px;
-    font-size: 1.1rem;
+    width: 38px;
+    height: 38px;
+    font-size: 0.95rem;
   }
   
   .score-display {
-    padding: 10px 18px;
-    min-width: 100px;
+    padding: 8px 14px;
+    min-width: 85px;
   }
   
   .score-value {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
   }
   
-  /* Image card adjustments for smaller iPad */
+  /* Image card adjustments for smaller iPad - Made Much Smaller */
   .image-card-content {
     flex-direction: column;
-    gap: 25px;
+    gap: 20px;
   }
   
   .image-side,
@@ -1135,80 +1162,80 @@ body {
   }
   
   .mq-image-box {
-    width: 450px;
-    height: 450px;
+    width: 300px;
+    height: 350px;
     max-width: 100%;
   }
   
   .options-side .mq-options {
     min-height: auto;
-    gap: 12px;
+    gap: 10px;
   }
   
   .options-side .mq-option {
-    padding: 16px 20px;
-    font-size: 1rem;
+    padding: 14px 16px;
+    font-size: 0.9rem;
   }
   
   .mq-card {
-    padding: 25px;
+    padding: 18px;
   }
   
   .mq-question {
-    font-size: 1.2rem;
-    margin-bottom: 25px;
+    font-size: 1.1rem;
+    margin-bottom: 20px;
   }
   
   /* Logo adjustments */
   .game-logos {
-    padding: 15px 20px;
+    padding: 12px 16px;
   }
   
   .logo-image {
-    height: 45px;
-    max-width: 130px;
+    height: 40px;
+    max-width: 120px;
   }
   
   .center-title {
-    font-size: 1.6rem;
+    font-size: 1.4rem;
   }
   
   .logo-left,
   .logo-right {
-    margin: 0 15px;
+    margin: 0 12px;
   }
   
   /* Form adjustments */
   .mq-form {
-    padding: 30px;
-    max-width: 450px;
+    padding: 25px;
+    max-width: 400px;
   }
   
   .mq-title {
-    font-size: 2.2rem;
+    font-size: 2rem;
   }
   
   /* Final score adjustments */
   .final-score-card {
-    padding: 30px;
+    padding: 25px;
   }
   
   .final-points {
-    font-size: 3rem;
+    font-size: 2.5rem;
   }
   
   .score-avatar {
-    width: 70px;
-    height: 70px;
-    font-size: 1.8rem;
+    width: 60px;
+    height: 60px;
+    font-size: 1.6rem;
   }
 }
 
 /* iPad Mini and smaller tablets (600px to 767px) */
 @media (min-width: 600px) and (max-width: 767px) {
   .mq-container {
-    padding: 12px;
-    padding-top: 80px;
+    padding: 10px;
+    padding-top: 75px;
   }
   
   .mq-game-content {
@@ -1217,8 +1244,8 @@ body {
   
   .mq-game-header {
     flex-direction: column;
-    padding: 16px 20px;
-    gap: 15px;
+    padding: 12px 16px;
+    gap: 12px;
   }
   
   .player-section {
@@ -1237,65 +1264,80 @@ body {
   
   .score-display {
     display: inline-block;
-    min-width: 140px;
+    min-width: 120px;
   }
   
-  /* Image card adjustments for iPad Mini */
+  /* Image card adjustments for iPad Mini - Made Even Smaller */
   .image-card-content {
     flex-direction: column;
-    gap: 20px;
+    gap: 18px;
   }
   
   .mq-image-box {
-    width: 400px;
-    height: 400px;
+    width: 280px;
+    height: 320px;
   }
   
   .options-side .mq-option {
-    padding: 15px 18px;
-    font-size: 0.95rem;
+    padding: 12px 14px;
+    font-size: 0.85rem;
   }
   
   .options-side .option-letter {
-    width: 36px;
-    height: 36px;
-    font-size: 0.9rem;
+    width: 32px;
+    height: 32px;
+    font-size: 0.8rem;
   }
   
   .mq-question {
-    font-size: 1.1rem;
+    font-size: 1rem;
     padding: 0 10px;
   }
   
   /* Logo adjustments */
   .game-logos {
-    padding: 12px 15px;
+    padding: 10px 12px;
   }
   
   .logo-image {
-    height: 40px;
-    max-width: 120px;
+    height: 35px;
+    max-width: 100px;
   }
   
   .center-title {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
   }
   
   .logo-left,
   .logo-right {
-    margin: 0 10px;
+    margin: 0 8px;
   }
   
   /* Toast adjustments */
   .mq-toast-wrap {
-    top: 90px;
+    top: 85px;
+  }
+  
+  .mq-card {
+    padding: 16px;
+  }
+  
+  .mq-option {
+    padding: 12px 14px;
+    gap: 12px;
+  }
+  
+  .option-letter {
+    width: 28px;
+    height: 28px;
+    font-size: 0.75rem;
   }
 }
 
 /* Landscape orientation for tablets */
 @media (min-width: 768px) and (max-width: 1023px) and (orientation: landscape) {
   .mq-container {
-    padding-top: 80px;
+    padding-top: 75px;
   }
   
   .mq-game-header {
@@ -1316,22 +1358,22 @@ body {
   .progress-section {
     order: 3;
     flex: 2;
-    max-width: 300px;
+    max-width: 250px;
     margin-top: 0;
   }
   
   .image-card-content {
     flex-direction: row;
-    gap: 25px;
+    gap: 20px;
   }
   
   .mq-image-box {
-    width: 350px;
-    height: 400px;
+    width: 220px;
+    height: 280px;
   }
   
   .options-side .mq-options {
-    min-height: 400px;
+    min-height: 280px;
   }
 }
 
@@ -1342,19 +1384,19 @@ body {
   }
   
   .mq-image-box {
-    width: 500px;
-    height: 500px;
+    width: 320px;
+    height: 380px;
   }
 }
 
 /* Existing responsive styles for smaller devices */
 @media (max-width: 480px) {
   .mq-title {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
   }
 
   .mq-btn {
-    padding: 14px 24px;
+    padding: 12px 20px;
   }
 
   .start-btn {
@@ -1362,40 +1404,40 @@ body {
   }
 
   .mq-image-box {
-    width: 350px;
-    height: 350px;
+    width: 260px;
+    height: 300px;
   }
 
   .final-score-card {
-    padding: 24px;
+    padding: 20px;
   }
 
   .game-logos {
-    padding: 10px;
+    padding: 8px;
   }
   
   .logo-left,
   .logo-right {
-    margin: 0 10px;
+    margin: 0 8px;
   }
   
   .logo-image {
-    height: 35px;
-    max-width: 100px;
+    height: 30px;
+    max-width: 80px;
   }
   
   .mq-container {
-    padding-top: 70px;
+    padding-top: 65px;
   }
 }
 
 @media (max-width: 380px) {
   .mq-image-box {
-    width: 300px;
-    height: 300px;
+    width: 240px;
+    height: 280px;
   }
   
   .logo-image {
-    height: 30px;
+    height: 28px;
   }
 }
