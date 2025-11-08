@@ -522,9 +522,6 @@ function FinalScore({ playerName, score, onPlayAgain }) {
         </div>
         <div className="mq-final-score">
           <div className="final-score-card">
-            <div className="score-avatar">
-              {playerName.charAt(0).toUpperCase()}
-            </div>
             <div className="final-player">
               <strong>{playerName.toUpperCase()}</strong>
             </div>
@@ -539,7 +536,7 @@ function FinalScore({ playerName, score, onPlayAgain }) {
             </div>
           </div>
         </div>
-        <div className="score-breakdown">
+        {/* <div className="score-breakdown">
           <h4>Performance Insights</h4>
           <div className="breakdown-items">
             <div className="breakdown-item">
@@ -555,7 +552,7 @@ function FinalScore({ playerName, score, onPlayAgain }) {
               <span>{Math.round((score / 50) * 100)}%</span>
             </div>
           </div>
-        </div>
+        </div> */}
         <div className="mq-actions">
           <button className="mq-btn primary home-btn" onClick={onPlayAgain}>
             🏠 Home
