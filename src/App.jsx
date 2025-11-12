@@ -4,9 +4,9 @@ import QuizGame from "./MyntraQuizGame";
 export default function App() {
   return (
     <Routes>
-      <Route path="/one" element={<QuizGame key="one" />} />
+      <Route path="/" element={<QuizGame key="" />} />
       <Route path="/two" element={<QuizGame key="two" />} />
-      <Route path="*" element={<Navigate to="/one" replace />} />
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 }
