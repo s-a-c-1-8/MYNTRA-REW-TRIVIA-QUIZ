@@ -862,7 +862,7 @@ export default function MyntraQuizGame() {
       setSelectedAnswer(null);
       setDisabledAnswers(false);
       setQuestionPointer(1); // Move to first trivia question
-    }, 2000);
+    }, 5000);
   }
 
   function handleImageChoice(choice) {
