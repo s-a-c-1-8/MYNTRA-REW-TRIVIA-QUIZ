@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./MyntraQuizGame.css";
+import { supabase } from "./supabaseClient";
 
 /* ---------- Game data (trivia + images) ---------- */
-// (kept exactly as you provided)
 const TRIVIA_QUESTIONS = [
   {
     id: 1,
@@ -231,20 +231,77 @@ const TRIVIA_QUESTIONS = [
 ];
 
 const IMAGE_QUESTIONS = [
-  { id: 1, label: "Mailroom", src: "/images/mailroom.jpg" },
-  { id: 2, label: "Gym", src: "/images/gym.jpg" },
-  { id: 3, label: "Mother Room", src: "/images/motherroom.jpg" },
-  { id: 4, label: "Nap Pods", src: "/images/nappods.jpg" },
-  { id: 5, label: "Fire Drill", src: "/images/firedrill.jpg" },
-  { id: 6, label: "ATM", src: "/images/atm.jpg" },
-  { id: 7, label: "MynMaidan", src: "/images/mynmaidan.jpg" },
-  { id: 8, label: "Dhyana Kaksa", src: "/images/dhyana.jpg" },
-  { id: 9, label: "Pantry", src: "/images/pantry.jpg" },
-  { id: 10, label: "EV Charging Station", src: "/images/ev.jpg" },
-  { id: 11, label: "5th Floor Audi", src: "/images/audi5.jpg" },
+  {
+    id: 1,
+    label: "Mailroom",
+    src: "/images/mailroom.JPG",
+    revealSrc: "/images/mailroom-reveal.JPG",
+  },
+  {
+    id: 2,
+    label: "Gym",
+    src: "/images/gym.JPG",
+    revealSrc: "/images/gym-reveal.JPG",
+  },
+  {
+    id: 3,
+    label: "Mother Room",
+    src: "/images/motherroom.JPG",
+    revealSrc: "/images/motherroom-reveal.JPG",
+  },
+  {
+    id: 4,
+    label: "Nap Pods",
+    src: "/images/nappods.JPG",
+    revealSrc: "/images/nappods-reveal.JPG",
+  },
+  {
+    id: 5,
+    label: "Fire Drill",
+    src: "/images/firedrill.JPG",
+    revealSrc: "/images/firedrill-reveal.JPG",
+  },
+  {
+    id: 6,
+    label: "ATM",
+    src: "/images/atm.JPG",
+    revealSrc: "/images/atm-reveal.JPG",
+  },
+  {
+    id: 7,
+    label: "MynMaidan",
+    src: "/images/mynmaidan.JPG",
+    revealSrc: "/images/mynmaidan-reveal.JPG",
+  },
+  {
+    id: 8,
+    label: "Dhyana Kaksa",
+    src: "/images/dhyana.JPG",
+    revealSrc: "/images/dhyana-reveal.JPG",
+  },
+  {
+    id: 9,
+    label: "Pantry",
+    src: "/images/pantry.JPG",
+    revealSrc: "/images/pantry-reveal.JPG",
+  },
+  {
+    id: 10,
+    label: "EV Charging Station",
+    src: "/images/ev.JPG",
+    revealSrc: "/images/ev-reveal.JPG",
+  },
+  {
+    id: 11,
+    label: "5th Floor Audi",
+    src: "/images/audi5.JPG",
+    revealSrc: "/images/audi5-reveal.JPG",
+  },
 ];
 
 const NUM_ROUNDS = 1;
+const TOTAL_QUESTIONS = 5; // 1 image + 4 trivia
+const GAME_TIME = 30; // 30 seconds timer
 
 /* ---------- Helpers ---------- */
 function shuffleArray(arr) {
@@ -256,30 +313,54 @@ function shuffleArray(arr) {
   return a;
 }
 
+function getRandomQuestions(count) {
+  const shuffled = shuffleArray([...TRIVIA_QUESTIONS]);
+  return shuffled.slice(0, count);
+}
+
 function buildRounds(triviaCount, imageCount, rounds = NUM_ROUNDS) {
-  const triviaIndices = shuffleArray(
-    Array.from({ length: triviaCount }, (_, i) => i)
-  );
+  const selectedTrivia = getRandomQuestions(triviaCount);
+  const triviaIndices = selectedTrivia.map((_, index) => index);
   const imageIndices = shuffleArray(
     Array.from({ length: imageCount }, (_, i) => i)
   );
+
   const result = [];
   let tPtr = 0,
     iPtr = 0;
+
   for (let r = 0; r < rounds; r++) {
-    if (tPtr + 2 > triviaIndices.length)
+    if (tPtr + 4 >= triviaIndices.length) {
+      // Reset if we run out of trivia questions
+      const moreTrivia = getRandomQuestions(triviaCount);
+      selectedTrivia.push(...moreTrivia);
       triviaIndices.push(
-        ...shuffleArray(Array.from({ length: triviaCount }, (_, i) => i))
+        ...Array.from(
+          { length: moreTrivia.length },
+          (_, i) => triviaIndices.length + i
+        )
       );
-    const t1 = triviaIndices[tPtr++],
-      t2 = triviaIndices[tPtr++];
-    if (iPtr >= imageIndices.length)
+    }
+
+    const t1 = triviaIndices[tPtr++];
+    const t2 = triviaIndices[tPtr++];
+    const t3 = triviaIndices[tPtr++];
+    const t4 = triviaIndices[tPtr++];
+
+    if (iPtr >= imageIndices.length) {
       imageIndices.push(
         ...shuffleArray(Array.from({ length: imageCount }, (_, i) => i))
       );
+    }
+
     const im = imageIndices[iPtr++];
-    result.push({ trivia: [t1, t2], image: im });
+    result.push({
+      trivia: [t1, t2, t3, t4],
+      image: im,
+      triviaQuestions: selectedTrivia,
+    });
   }
+
   return result;
 }
 
@@ -301,9 +382,9 @@ function GameLogos() {
           <span>MYNTRA</span>
         </div>
       </div>
-      <div className="logo-center">
-        <h1 className="center-title">Myntra Quiz Challenge</h1>
-      </div>
+      {/* <div className="logo-center">
+        <h1 className="center-title">Know Your Facilities</h1>
+      </div> */}
       <div className="logo-right">
         <img
           src="/Logo-1.png"
@@ -322,6 +403,16 @@ function GameLogos() {
   );
 }
 
+/* ---------- Timer Component ---------- */
+function Timer({ timeLeft }) {
+  return (
+    <div className="timer-container">
+      <div className="timer-number-large">{timeLeft}</div>
+      <div className="timer-label">SECONDS LEFT</div>
+    </div>
+  );
+}
+
 /* ---------- UI subcomponents ---------- */
 function StartForm({ onStart }) {
   const [name, setName] = useState("");
@@ -332,14 +423,17 @@ function StartForm({ onStart }) {
       <div className="mq-form">
         <div className="mq-header-logo">
           <div className="mq-main-title">
-            Ready to prove you're a true
+            <div className="logo-center">
+              <h1 className="center-title">Know Your Facilities</h1>
+            </div>
+            {/* Ready to prove you're a true
             <img
               style={{ width: "40px", height: "auto", marginBottom: "-8px" }}
               src="/Logo-2.png"
               alt="Myntra Logo"
               className="logo-image"
             />
-            expert?
+            expert? */}
           </div>
         </div>
         <div className="mq-input-row">
@@ -350,32 +444,6 @@ function StartForm({ onStart }) {
             placeholder="Your name here..."
           />
         </div>
-        <div className="mq-input-row">
-          <button
-            className="mq-btn ghost"
-            onClick={() => setShowRules((s) => !s)}
-          >
-            {showRules ? "Hide Rules" : "Show Rules"}
-          </button>
-        </div>
-        {showRules && (
-          <div className="mq-rules">
-            <h3>🎯 Game Rules & Scoring</h3>
-            <ul>
-              <li>
-                ✅ <strong>Trivia Questions:</strong> +10 for correct, -5 for
-                incorrect (only if score &gt; 0)
-              </li>
-              <li>
-                🖼️ <strong>Image Questions:</strong> First try = +30, Second try
-                = +20
-              </li>
-              <li>
-                📊 <strong>Game Structure:</strong> 2 trivia + 1 image question
-              </li>
-            </ul>
-          </div>
-        )}
         <div className="mq-start-action">
           <button
             className="mq-btn primary start-btn"
@@ -430,47 +498,88 @@ function ImageCard({
   options,
   disabled,
   selectedAnswer,
+  showReveal,
+  correctAnswer,
 }) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
+  const [revealImageLoaded, setRevealImageLoaded] = useState(false);
+
   useEffect(() => {
     setImageLoaded(false);
     setImageError(false);
+    setRevealImageLoaded(false);
   }, [imageObj]);
+
+  // Use reveal image when showReveal is true, otherwise use normal image
+  const currentImageSrc = showReveal
+    ? imageObj?.revealSrc || imageObj?.src
+    : imageObj?.src;
 
   return (
     <div className="mq-card image-card">
-      <div className="mq-question-count">Identify the Image</div>
+      <div className="mq-question-count">
+        {showReveal ? "Image Reveal!" : "Identify the Image"}
+      </div>
       <div className="image-card-content">
         <div className="image-side">
           <div className="mq-image-container">
             <div className="mq-image-box">
-              {!imageLoaded && !imageError && (
+              {!imageLoaded && !imageError && !showReveal && (
                 <div className="image-skeleton-loading">
                   <div className="skeleton-spinner"></div>
                   <div className="skeleton-text">Loading image...</div>
                 </div>
               )}
-              
-              {imageObj?.src ? (
+
+              {!revealImageLoaded && !imageError && showReveal && (
+                <div className="image-skeleton-loading">
+                  <div className="skeleton-spinner"></div>
+                  <div className="skeleton-text">Loading reveal image...</div>
+                </div>
+              )}
+
+              {currentImageSrc ? (
                 <img
-                  src={imageObj.src}
+                  src={currentImageSrc}
                   alt={imageObj.label}
                   className={`image-view ${
-                    roundZoom === 1 ? "zoom-60" : "zoom-40"
-                  } ${imageLoaded ? "loaded" : "loading"}`}
-                  onLoad={() => setImageLoaded(true)}
+                    roundZoom === 1
+                      ? "zoom-10"
+                      : showReveal
+                      ? "zoom-100"
+                      : "zoom-30"
+                  } ${
+                    (showReveal ? revealImageLoaded : imageLoaded)
+                      ? "loaded"
+                      : "loading"
+                  }`}
+                  onLoad={() => {
+                    if (showReveal) {
+                      setRevealImageLoaded(true);
+                    } else {
+                      setImageLoaded(true);
+                    }
+                  }}
                   onError={() => {
                     setImageError(true);
-                    setImageLoaded(true);
+                    if (showReveal) {
+                      setRevealImageLoaded(true);
+                    } else {
+                      setImageLoaded(true);
+                    }
                   }}
-                  style={{ 
+                  style={{
                     objectFit: "cover",
-                    display: imageLoaded && !imageError ? 'block' : 'none'
+                    display:
+                      (showReveal ? revealImageLoaded : imageLoaded) &&
+                      !imageError
+                        ? "block"
+                        : "none",
                   }}
                 />
               ) : null}
-              
+
               {imageError && (
                 <div className="mq-image-fallback">
                   <div className="image-placeholder">🏢</div>
@@ -480,36 +589,44 @@ function ImageCard({
               )}
             </div>
             <div className="image-hint">
-              {roundZoom === 1
-                ? "🔍 Look carefully at the details!"
-                : "👀 Second chance with more visible!"}
+              {showReveal ? (
+                <span style={{ color: "#4CAF50", fontWeight: "bold" }}>
+                  ✅ This is: {correctAnswer}
+                </span>
+              ) : roundZoom === 1 ? (
+                "🔍 Look carefully at the details!"
+              ) : (
+                "👀 Second chance with more visible!"
+              )}
             </div>
           </div>
         </div>
 
-        <div className="options-side">
-          <div className="mq-options">
-            {options.map((opt, i) => {
-              const isSelected = selectedAnswer === opt;
-              const cls = isSelected ? "mq-option selected" : "mq-option";
-              return (
-                <button
-                  key={i}
-                  className={cls}
-                  aria-disabled={disabled}
-                  disabled={disabled}
-                  title={opt}
-                  onClick={() => onChoose(opt)}
-                >
-                  <span className="option-letter">
-                    {String.fromCharCode(65 + i)}
-                  </span>
-                  <span className="option-text">{opt}</span>
-                </button>
-              );
-            })}
+        {!showReveal && (
+          <div className="options-side">
+            <div className="mq-options">
+              {options.map((opt, i) => {
+                const isSelected = selectedAnswer === opt;
+                const cls = isSelected ? "mq-option selected" : "mq-option";
+                return (
+                  <button
+                    key={i}
+                    className={cls}
+                    aria-disabled={disabled}
+                    disabled={disabled}
+                    title={opt}
+                    onClick={() => onChoose(opt)}
+                  >
+                    <span className="option-letter">
+                      {String.fromCharCode(65 + i)}
+                    </span>
+                    <span className="option-text">{opt}</span>
+                  </button>
+                );
+              })}
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
@@ -518,10 +635,10 @@ function ImageCard({
 /* FinalScore left as-is */
 function FinalScore({ playerName, score, onPlayAgain }) {
   const getPerformanceMessage = () => {
-    if (score >= 40) return { message: "🏆 Champion! 🏆", color: "#FFD700" };
-    if (score >= 30) return { message: "🎯 Excellent!", color: "#4CAF50" };
-    if (score >= 20) return { message: "👍 Great Job!", color: "#2196F3" };
-    if (score >= 10) return { message: "💪 Good Effort!", color: "#FF9800" };
+    if (score >= 120) return { message: "🏆 Champion! 🏆", color: "#FFD700" };
+    if (score >= 90) return { message: "🎯 Excellent!", color: "#4CAF50" };
+    if (score >= 60) return { message: "👍 Great Job!", color: "#2196F3" };
+    if (score >= 30) return { message: "💪 Good Effort!", color: "#FF9800" };
     return { message: "🌟 Keep Learning!", color: "#9C27B0" };
   };
   const performance = getPerformanceMessage();
@@ -548,23 +665,6 @@ function FinalScore({ playerName, score, onPlayAgain }) {
             </div>
           </div>
         </div>
-        {/* <div className="score-breakdown">
-          <h4>Performance Insights</h4>
-          <div className="breakdown-items">
-            <div className="breakdown-item">
-              <span>Maximum Possible:</span>
-              <span>50 points</span>
-            </div>
-            <div className="breakdown-item">
-              <span>Your Score:</span>
-              <span>{score} points</span>
-            </div>
-            <div className="breakdown-item">
-              <span>Performance:</span>
-              <span>{Math.round((score / 50) * 100)}%</span>
-            </div>
-          </div>
-        </div> */}
         <div className="mq-actions">
           <button className="mq-btn primary home-btn" onClick={onPlayAgain}>
             🏠 Home
@@ -587,6 +687,9 @@ export default function MyntraQuizGame() {
   const [disabledAnswers, setDisabledAnswers] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [gameFinished, setGameFinished] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(GAME_TIME);
+  const [showImageReveal, setShowImageReveal] = useState(false);
+  const [imageAttempts, setImageAttempts] = useState(0);
 
   // toast state
   const [toast, setToast] = useState({
@@ -598,7 +701,7 @@ export default function MyntraQuizGame() {
 
   useEffect(() => {
     setRounds(
-      buildRounds(TRIVIA_QUESTIONS.length, IMAGE_QUESTIONS.length, NUM_ROUNDS)
+      buildRounds(4, IMAGE_QUESTIONS.length, NUM_ROUNDS) // 4 trivia questions + 1 image
     );
   }, []);
 
@@ -607,19 +710,42 @@ export default function MyntraQuizGame() {
     setImageRoundZoom(1);
     setSelectedAnswer(null);
     setDisabledAnswers(false);
+    setShowImageReveal(false);
+    setImageAttempts(0);
   }, [currentRoundIndex]);
 
   useEffect(() => {
     if (!rounds || rounds.length === 0) return;
-    if (questionPointer !== 2) return;
-    const currentRound = rounds[currentRoundIndex];
-    if (!currentRound) return;
-    const imageGlobalIndex = currentRound.image;
-    const imageObjForOptions = IMAGE_QUESTIONS[imageGlobalIndex];
-    if (!imageObjForOptions) return;
-    const opts = generateImageOptions(imageObjForOptions.label);
-    setImageOptions(opts);
+
+    // Image question now comes first (questionPointer 0)
+    if (questionPointer === 0) {
+      const currentRound = rounds[currentRoundIndex];
+      if (!currentRound) return;
+      const imageGlobalIndex = currentRound.image;
+      const imageObjForOptions = IMAGE_QUESTIONS[imageGlobalIndex];
+      if (!imageObjForOptions) return;
+      const opts = generateImageOptions(imageObjForOptions.label);
+      setImageOptions(opts);
+    }
   }, [questionPointer, currentRoundIndex, rounds]);
+
+  // Timer effect
+  useEffect(() => {
+    if (!playerName || gameFinished || timeLeft <= 0 || showImageReveal) return;
+
+    const timerId = setTimeout(() => {
+      setTimeLeft(timeLeft - 1);
+    }, 1000);
+
+    return () => clearTimeout(timerId);
+  }, [timeLeft, playerName, gameFinished, showImageReveal]);
+
+  // Time up effect
+  useEffect(() => {
+    if (timeLeft <= 0 && !gameFinished) {
+      handleTimeUp();
+    }
+  }, [timeLeft, gameFinished]);
 
   useEffect(() => {
     return () => {
@@ -643,8 +769,11 @@ export default function MyntraQuizGame() {
     setGameFinished(false);
     setQuestionPointer(0);
     setImageRoundZoom(1);
+    setTimeLeft(GAME_TIME);
+    setShowImageReveal(false);
+    setImageAttempts(0);
     setRounds(
-      buildRounds(TRIVIA_QUESTIONS.length, IMAGE_QUESTIONS.length, NUM_ROUNDS)
+      buildRounds(4, IMAGE_QUESTIONS.length, NUM_ROUNDS) // 4 trivia + 1 image
     );
   }
 
@@ -652,30 +781,65 @@ export default function MyntraQuizGame() {
     return rounds[currentRoundIndex];
   }
 
+  // Function to save score (placeholder for API integration)
+  async function saveScoreToAPI(name, finalScore) {
+    try {
+      const { data, error } = await supabase
+        .from("trivia-quiz_scores")
+        .insert([{ name, score: finalScore }]);
+
+      if (error) {
+        console.error("❌ Supabase error:", error);
+      } else {
+        console.log("✅ Score saved:", data);
+      }
+    } catch (err) {
+      console.error("Error saving score:", err);
+    }
+  }
+
+  function handleTimeUp() {
+    setDisabledAnswers(true);
+    showToast("⏰ Time's up! Game over", "error", 3000);
+    setTimeout(() => {
+      setGameFinished(true);
+      // Here you can add API call to save score
+      saveScoreToAPI(playerName, score);
+    }, 2000);
+  }
+
   function handleTriviaAnswer(selectedIndex) {
     const round = getCurrentRound();
     if (!round) return;
-    const triviaGlobalIndex = round.trivia[questionPointer];
-    const questionObj = TRIVIA_QUESTIONS[triviaGlobalIndex];
+
+    // Adjust index since image is now first (questionPointer 0)
+    const triviaIndex = questionPointer - 1; // Because image is at position 0
+    const triviaGlobalIndex = round.trivia[triviaIndex];
+    const questionObj = round.triviaQuestions[triviaGlobalIndex];
     const correct = selectedIndex === questionObj.answerIndex;
-    const delta = correct ? 10 : score > 0 ? -5 : 0;
+    const delta = correct ? 30 : -10;
 
     // selected state while toast shows
     setSelectedAnswer(selectedIndex);
     setDisabledAnswers(true);
 
     // show toast
-    if (correct) showToast("✅ Correct! +10 points", "success");
-    else if (delta < 0) showToast("❌ Incorrect! -5 points", "error");
-    else showToast("❌ Incorrect! (no deduction)", "error");
+    if (correct) showToast("✅ Correct! +30 points", "success");
+    else showToast("❌ Incorrect! -10 points", "error");
 
     // apply score and advance after a small delay
     setTimeout(() => {
-      setScore((s) => s + delta);
+      setScore((s) => Math.max(0, s + delta)); // Ensure score doesn't go below 0
       setTimeout(() => {
         setSelectedAnswer(null);
         setDisabledAnswers(false);
-        if (questionPointer < 2) setQuestionPointer((p) => p + 1);
+        if (questionPointer < TOTAL_QUESTIONS - 1) {
+          setQuestionPointer((p) => p + 1);
+        } else {
+          setGameFinished(true);
+          // Here you can add API call to save score
+          saveScoreToAPI(playerName, score + delta);
+        }
       }, 700);
     }, 600);
   }
@@ -688,6 +852,19 @@ export default function MyntraQuizGame() {
     return options;
   }
 
+  function handleImageReveal() {
+    setShowImageReveal(true);
+    setDisabledAnswers(true);
+
+    // Show the revealed image for 2 seconds then move to next question
+    setTimeout(() => {
+      setShowImageReveal(false);
+      setSelectedAnswer(null);
+      setDisabledAnswers(false);
+      setQuestionPointer(1); // Move to first trivia question
+    }, 2000);
+  }
+
   function handleImageChoice(choice) {
     const round = getCurrentRound();
     if (!round) return;
@@ -697,12 +874,23 @@ export default function MyntraQuizGame() {
 
     setSelectedAnswer(choice);
     setDisabledAnswers(true);
+    setImageAttempts((prev) => prev + 1);
 
     if (imageRoundZoom === 1) {
+      // 🥇 First attempt
       if (correct) {
         showToast("🎉 Perfect! +30 points", "celebrate");
         setTimeout(() => setScore((s) => s + 30), 500);
-        setTimeout(() => setGameFinished(true), 1100);
+        setTimeout(() => {
+          setImageRoundZoom(0);
+          handleImageReveal(); // 👈 show reveal first
+          // wait 2 seconds (for reveal display), then continue
+          setTimeout(() => {
+            setSelectedAnswer(null);
+            setDisabledAnswers(false);
+            setQuestionPointer(1); // move to trivia after reveal
+          }, 2000);
+        }, 800);
       } else {
         showToast("❌ Incorrect — Second try unlocked", "error");
         setTimeout(() => {
@@ -712,13 +900,26 @@ export default function MyntraQuizGame() {
         }, 700);
       }
     } else {
+      // 🥈 Second attempt
       if (correct) {
-        showToast("✅ Correct! +20 points", "success");
-        setTimeout(() => setScore((s) => s + 20), 500);
+        showToast("✅ Correct! +30 points", "success");
+        setTimeout(() => setScore((s) => s + 30), 500);
+        setTimeout(() => {
+          handleImageReveal(); // 👈 show reveal first
+          // wait 2 seconds (for reveal display), then continue
+          setTimeout(() => {
+            setSelectedAnswer(null);
+            setDisabledAnswers(false);
+            setQuestionPointer(1); // move to trivia after reveal
+          }, 2000);
+        }, 800);
       } else {
-        showToast("❌ Incorrect — 0 points", "error");
+        // ❌ Both attempts failed
+        showToast("❌ Incorrect — Revealing the answer", "error");
+        setTimeout(() => {
+          handleImageReveal();
+        }, 700);
       }
-      setTimeout(() => setGameFinished(true), 1000);
     }
   }
 
@@ -731,9 +932,10 @@ export default function MyntraQuizGame() {
     setGameFinished(false);
     setDisabledAnswers(false);
     setSelectedAnswer(null);
-    setRounds(
-      buildRounds(TRIVIA_QUESTIONS.length, IMAGE_QUESTIONS.length, NUM_ROUNDS)
-    );
+    setTimeLeft(GAME_TIME);
+    setShowImageReveal(false);
+    setImageAttempts(0);
+    setRounds(buildRounds(4, IMAGE_QUESTIONS.length, NUM_ROUNDS));
   }
 
   /* ---------- Render ---------- */
@@ -751,11 +953,12 @@ export default function MyntraQuizGame() {
   }
 
   const round = getCurrentRound();
-  const triviaObjA = round ? TRIVIA_QUESTIONS[round.trivia[0]] : null;
-  const triviaObjB = round ? TRIVIA_QUESTIONS[round.trivia[1]] : null;
+  const triviaObj1 = round ? round.triviaQuestions[round.trivia[0]] : null;
+  const triviaObj2 = round ? round.triviaQuestions[round.trivia[1]] : null;
+  const triviaObj3 = round ? round.triviaQuestions[round.trivia[2]] : null;
+  const triviaObj4 = round ? round.triviaQuestions[round.trivia[3]] : null;
   const imageObj = round ? IMAGE_QUESTIONS[round.image] : null;
   const questionNumber = questionPointer + 1;
-  const totalQuestions = 3;
 
   return (
     <div className="mq-container game-screen">
@@ -782,60 +985,86 @@ export default function MyntraQuizGame() {
       {/* Logos */}
       <GameLogos />
 
-      {/* Game Header */}
+      {/* Game Header - Updated layout */}
       <div className="mq-game-header">
         <div className="player-section">
           <div className="player-info">
             <div className="player-name">{playerName.toUpperCase()}</div>
-            <div className="player-status">Playing Now</div>
+            <div className="player-status">PLAYING NOW</div>
           </div>
         </div>
 
         <div className="progress-section">
+          <div className="progress-text">
+            Question {questionNumber} of {TOTAL_QUESTIONS}
+          </div>
           <div className="progress-bar">
             <div
               className="progress-fill"
-              style={{ width: `${(questionNumber / totalQuestions) * 100}%` }}
+              style={{ width: `${(questionNumber / TOTAL_QUESTIONS) * 100}%` }}
             />
-          </div>
-          <div className="progress-text">
-            Question {questionNumber} of {totalQuestions}
           </div>
         </div>
 
-        <div className="score-section">
-          <div className="score-display">
-            <span className="score-label">SCORE</span>
-            <span className="score-value">{score}</span>
+        <div className="stats-section">
+          <div className="score-display-large">
+            <div className="score-value-large">{score}</div>
+            <div className="score-label">SCORE</div>
+          </div>
+
+          <div className="timer-display-large">
+            <div className="timer-number-large">{timeLeft}</div>
+            <div className="timer-label">SECONDS LEFT</div>
           </div>
         </div>
       </div>
 
       {/* Game Content */}
       <div className="mq-game-content">
-        {questionPointer === 0 && triviaObjA && (
-          <TriviaCard
-            question={triviaObjA}
-            onAnswer={handleTriviaAnswer}
-            disabled={disabledAnswers}
-            selectedAnswer={selectedAnswer}
-          />
-        )}
-        {questionPointer === 1 && triviaObjB && (
-          <TriviaCard
-            question={triviaObjB}
-            onAnswer={handleTriviaAnswer}
-            disabled={disabledAnswers}
-            selectedAnswer={selectedAnswer}
-          />
-        )}
-        {questionPointer === 2 && imageObj && (
+        {/* Image question comes first (questionPointer 0) */}
+        {questionPointer === 0 && imageObj && (
           <ImageCard
             imageObj={imageObj}
             roundZoom={imageRoundZoom}
             options={imageOptions}
             onChoose={handleImageChoice}
-            disabled={disabledAnswers}
+            disabled={disabledAnswers || timeLeft <= 0}
+            selectedAnswer={selectedAnswer}
+            showReveal={showImageReveal}
+            correctAnswer={imageObj?.label}
+          />
+        )}
+
+        {/* Trivia questions follow (questionPointer 1, 2, 3, 4) */}
+        {questionPointer === 1 && triviaObj1 && (
+          <TriviaCard
+            question={triviaObj1}
+            onAnswer={handleTriviaAnswer}
+            disabled={disabledAnswers || timeLeft <= 0}
+            selectedAnswer={selectedAnswer}
+          />
+        )}
+        {questionPointer === 2 && triviaObj2 && (
+          <TriviaCard
+            question={triviaObj2}
+            onAnswer={handleTriviaAnswer}
+            disabled={disabledAnswers || timeLeft <= 0}
+            selectedAnswer={selectedAnswer}
+          />
+        )}
+        {questionPointer === 3 && triviaObj3 && (
+          <TriviaCard
+            question={triviaObj3}
+            onAnswer={handleTriviaAnswer}
+            disabled={disabledAnswers || timeLeft <= 0}
+            selectedAnswer={selectedAnswer}
+          />
+        )}
+        {questionPointer === 4 && triviaObj4 && (
+          <TriviaCard
+            question={triviaObj4}
+            onAnswer={handleTriviaAnswer}
+            disabled={disabledAnswers || timeLeft <= 0}
             selectedAnswer={selectedAnswer}
           />
         )}

@@ -31,7 +31,7 @@
 }
 
 body {
-  background: linear-gradient(135deg, #94969f 0%, #ff9f00 70%,  #ff3f6c 100%);
+  background: linear-gradient(135deg, #2c22fd 0%, #2c22fd 30%,  #e43496 100%);
   min-height: 100vh;
   color: var(--text);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -585,6 +585,50 @@ body {
 }
 
 /* Zoom classes - Adjusted for smaller image */
+.image-view.zoom-8 {
+  transform: scale(12.5); /* 1250% zoom - Ultra Extreme */
+  transform-origin: center center;
+}
+
+.image-view.zoom-10 {
+  transform: scale(10); /* 1000% zoom - Very Extreme */
+  transform-origin: center center;
+}
+
+.image-view.zoom-12 {
+  transform: scale(8.33); /* 833% zoom - Extreme */
+  transform-origin: center center;
+}
+
+.image-view.zoom-15 {
+  transform: scale(6.67); /* 667% zoom - Very High */
+  transform-origin: center center;
+}
+
+.image-view.zoom-20 {
+  transform: scale(5); /* 500% zoom - High */
+  transform-origin: center center;
+}
+
+.image-view.zoom-25 {
+  transform: scale(4); /* 400% zoom - Medium High */
+  transform-origin: center center;
+}
+
+.image-view.zoom-30 {
+  transform: scale(3.33); /* 333% zoom - Medium */
+  transform-origin: center center;
+}
+
+.image-view.zoom-40 {
+  transform: scale(2.5); /* 250% zoom - Low Medium */
+  transform-origin: center center;
+}
+
+.image-view.zoom-50 {
+  transform: scale(2); /* 200% zoom - Low */
+  transform-origin: center center;
+}
 .image-view.zoom-60 {
   transform: scale(2);
   transform-origin: center center;
@@ -594,6 +638,7 @@ body {
   transform: scale(1.5);
   transform-origin: center center;
 }
+
 
 .image-loading {
   position: absolute;
@@ -1562,3 +1607,188 @@ body {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+/* Add these styles to your MyntraQuizGame.css file */
+
+/* Updated Game Header Styles */
+.mq-game-header {
+  width: 100%;
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 20px 30px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--card-border);
+  gap: 20px;
+  backdrop-filter: blur(10px);
+}
+
+.player-section {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex: 1;
+}
+
+.player-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.player-name {
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: var(--text);
+  letter-spacing: 0.5px;
+}
+
+.player-status {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.progress-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  max-width: 250px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--gradient-primary);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+  box-shadow: 0 0 10px rgba(255, 63, 108, 0.5);
+}
+
+.progress-text {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.stats-section {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  flex: 1;
+  justify-content: flex-end;
+}
+
+.score-display-large,
+.timer-display-large {
+  text-align: center;
+  background: var(--gradient-secondary);
+  padding: 15px 20px;
+  border-radius: 12px;
+  border: 2px solid var(--card-border);
+  min-width: 120px;
+  box-shadow: var(--shadow);
+}
+
+.score-value-large,
+.timer-number-large {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--primary);
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  font-family: 'Courier New', monospace;
+  margin-bottom: 5px;
+}
+
+.score-label,
+.timer-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Timer specific styles */
+.timer-display-large {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: 2px solid #fff;
+}
+
+.timer-number-large {
+  color: white;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+/* Image reveal styles */
+.image-view.zoom-100 {
+  transform: scale(1);
+  transform-origin: center center;
+  transition: transform 0.5s ease;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .mq-game-header {
+    flex-direction: column;
+    padding: 15px 20px;
+    gap: 15px;
+  }
+  
+  .player-section,
+  .progress-section,
+  .stats-section {
+    width: 100%;
+    max-width: 100%;
+    justify-content: center;
+  }
+  
+  .stats-section {
+    gap: 20px;
+  }
+  
+  .score-display-large,
+  .timer-display-large {
+    min-width: 100px;
+    padding: 12px 15px;
+  }
+  
+  .score-value-large,
+  .timer-number-large {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-section {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .score-display-large,
+  .timer-display-large {
+    width: 100%;
+    max-width: 200px;
+  }
+} 
