@@ -370,7 +370,7 @@ function GameLogos() {
     <div className="game-logos">
       <div className="logo-left">
         <img
-          src="/Logo-.png"
+          src="/Logo-2.png"
           alt="Myntra Logo"
           className="logo-image"
           onError={(e) => {
