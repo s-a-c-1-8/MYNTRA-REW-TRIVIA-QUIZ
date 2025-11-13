@@ -370,7 +370,7 @@ function GameLogos() {
     <div className="game-logos">
       <div className="logo-left">
         <img
-          src="/Logo-2.png"
+          src="/Logo-.png"
           alt="Myntra Logo"
           className="logo-image"
           onError={(e) => {
@@ -387,7 +387,7 @@ function GameLogos() {
       </div> */}
       <div className="logo-right">
         <img
-          src="/Logo-1.png"
+          src="/Logo-3.png"
           alt="Myntra Olympics"
           className="logo-image"
           onError={(e) => {
