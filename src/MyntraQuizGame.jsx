@@ -301,7 +301,7 @@ const IMAGE_QUESTIONS = [
 
 const NUM_ROUNDS = 1;
 const TOTAL_QUESTIONS = 5; // 1 image + 4 trivia
-const GAME_TIME = 30; // 30 seconds timer
+const GAME_TIME = 50; // 30 seconds timer
 
 /* ---------- Helpers ---------- */
 function shuffleArray(arr) {
