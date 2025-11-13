@@ -889,7 +889,7 @@ export default function MyntraQuizGame() {
             setSelectedAnswer(null);
             setDisabledAnswers(false);
             setQuestionPointer(1); // move to trivia after reveal
-          }, 2000);
+          }, 5000);
         }, 800);
       } else {
         showToast("❌ Incorrect — Second try unlocked", "error");
@@ -911,7 +911,7 @@ export default function MyntraQuizGame() {
             setSelectedAnswer(null);
             setDisabledAnswers(false);
             setQuestionPointer(1); // move to trivia after reveal
-          }, 2000);
+          }, 5000);
         }, 800);
       } else {
         // ❌ Both attempts failed
