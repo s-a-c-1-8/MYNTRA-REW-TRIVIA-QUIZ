@@ -219,7 +219,7 @@ const TRIVIA_QUESTIONS = [
   },
   {
     id: 26,
-    q: "Advantages of tickets getting booked from CT",
+    q: "Advantages of tickets getting booked from Clear Trip",
     options: [
       "Free Meal, Free Seat & Minimal cancellation charges",
       "No benefits",
@@ -229,6 +229,7 @@ const TRIVIA_QUESTIONS = [
     answerIndex: 0,
   },
 ];
+
 
 const IMAGE_QUESTIONS = [
   {
