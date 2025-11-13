@@ -19,7 +19,7 @@ const TRIVIA_QUESTIONS = [
       "Swimming, Stepathon, and Painting.",
       "Pickleball, Chess, and Cricket.",
     ],
-    answerIndex: 1,
+    answerIndex: 2,
   },
   {
     id: 3,
@@ -41,7 +41,7 @@ const TRIVIA_QUESTIONS = [
       "40 kms",
       "Within municipal limits of Bangalore",
     ],
-    answerIndex: 0,
+    answerIndex: 3,
   },
   {
     id: 5,
@@ -53,7 +53,7 @@ const TRIVIA_QUESTIONS = [
     id: 6,
     q: "Are the plants currently found inside the Myntra campus natural, artificial, or a combination of both?",
     options: ["Natural", "Artificial", "Both", "Neither"],
-    answerIndex: 2,
+    answerIndex: 0,
   },
   {
     id: 7,
@@ -65,7 +65,7 @@ const TRIVIA_QUESTIONS = [
     id: 8,
     q: "What is the percentage discount you receive at TBC (The Be Continued) upon presenting your Myntra ID card?",
     options: ["5%", "10%", "15%", "20%"],
-    answerIndex: 1,
+    answerIndex: 2,
   },
   {
     id: 9,
@@ -102,13 +102,13 @@ const TRIVIA_QUESTIONS = [
       "All floors",
       "None",
     ],
-    answerIndex: 0,
+    answerIndex: 1,
   },
   {
     id: 13,
     q: "According to the company travel policy, what is the minimum number of days prior to the domestic travel date that the request must be submitted?",
     options: ["20 days", "15 days", "25 days", "10 days"],
-    answerIndex: 1,
+    answerIndex: 3,
   },
   {
     id: 14,
@@ -136,13 +136,13 @@ const TRIVIA_QUESTIONS = [
     id: 16,
     q: "Where is the designated fire refuge area located within our campus building?",
     options: ["All floors", "None of the floors", "Ground Floor", "4th Floor"],
-    answerIndex: 2,
+    answerIndex: 3,
   },
   {
     id: 17,
     q: "What is the longest available tenure (in months) for the employee car lease program?",
     options: ["60 months", "72 months", "84 months", "96 months"],
-    answerIndex: 2,
+    answerIndex: 0,
   },
   {
     id: 18,
@@ -198,7 +198,7 @@ const TRIVIA_QUESTIONS = [
     id: 23,
     q: "What percentage of our campus is currently powered by green energy?",
     options: ["100%", "75%", "65%", "40%"],
-    answerIndex: 2,
+    answerIndex: 0,
   },
   {
     id: 24,
@@ -209,13 +209,13 @@ const TRIVIA_QUESTIONS = [
       "There are currently no charges (free of cost)",
       "Pay based on actual usage",
     ],
-    answerIndex: 3,
+    answerIndex: 2,
   },
   {
     id: 25,
     q: "On which floor of the Myntra Bangalore office is the largest auditorium (Audi room) situated?",
     options: ["Ground Floor", "2nd Floor", "3rd Floor", "5th Floor"],
-    answerIndex: 2,
+    answerIndex: 3,
   },
   {
     id: 26,
